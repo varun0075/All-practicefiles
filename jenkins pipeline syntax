@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('CODE') {
+            steps {
+            git url: 'https://github.com/varun0075/node-todo-cicd.git', branch: 'master'
+            echo 'code cloned'
+            }
+        }
+       stage('BUILD') {
+            steps {
+            sh 'docker build . -t trainwithshubham/node-todo-app-cicd'
+            echo 'code built'
+            }
+       }
+       stage('TEST') {
+            steps {
+                echo 'code tested'
+            }
+       }
+       stage('DEPLOY') {
+            steps {
+                sh 'docker run -d trainwithshubham/node-todo-app-cicd:latest'
+                echo 'code deployed'
+            }
+       }
+    }
+}
